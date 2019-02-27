@@ -5,6 +5,7 @@
 #include <QQmlContext>
 #include <QFile>
 #include <QTextStream>
+#include <QRegExp>
 #include "dataobject.h"
 
 void readDataFile(QString a_fileName, QList<QObject*> *a_list)
@@ -17,8 +18,8 @@ void readDataFile(QString a_fileName, QList<QObject*> *a_list)
     QTextStream in(&l_file);
     while (!in.atEnd()) {
         QString l_line = in.readLine();
-        QStringList l_list = l_line.split(';');
-        if (l_list.size() != 3) {
+        QStringList l_list = l_line.split(QRegExp(";\b*"));
+        if (l_list.size() != 4) {
             break;
         }
         a_list->append(new DataObject(l_list[0], l_list[1], l_list[2]));
